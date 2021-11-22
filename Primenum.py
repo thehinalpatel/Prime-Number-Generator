@@ -95,16 +95,17 @@ def disp3(num1,num2):
     finally:  
         return jsonify({'data': data,"elapsed":elapsed,"length":length,"method":"method-3"}) 
 
+
+@app.route("/view")  
+def view():  
+    con = sqlite3.connect("primenum.db")  
+    con.row_factory = sqlite3.Row  
+    cur = con.cursor()  
+    cur.execute("select * from Primenumgenerator")  
+    rows = cur.fetchall()  
+    return render_template("view.html",rows = rows)  
+
 # driver function
 if __name__ == '__main__':
 
 	app.run(debug = True)
-
-@app.route("/view")  
-def view():  
-    con = sqlite3.connect("Primenum.db")  
-    con.row_factory = sqlite3.Row  
-    cur = con.cursor()  
-    cur.execute("select * from Primenum")  
-    rows = cur.fetchall()  
-    return render_template("view.html",rows = rows)  
